@@ -13,6 +13,28 @@ from openhands.events.observation.observation import Observation
 from rake_nltk import Rake
 
 
+# base class
+
+@dataclass
+class Issue:
+    # unified issue datastructure
+    #{
+  #   "id": "5590",
+  #   "source": "github",
+  #   "title": "HIVE-28518: Iceberg: Fix ClassCastException during in-place migration to Iceberg tables with timestamp columns",
+  #   "created": "12/25/24",
+  #   "description": "### What changes were proposed in this pull request? This fix improves the stability and reliability of in-place migrated Iceberg tables involving timestamp data types. ### Why are the changes needed? The issue occurred due to incorrect type casting in the timestamp handling logic, which caused the migrated Iceberg tables Fetch task to fail. ### Does this PR introduce _any_ user-facing change? No ### Is the change a dependency upgrade? No ### How was this patch tested? Qtest - iceberg_inplace_migration_with_timestamp_column.q",
+  #   "status": ["closed", "merged"]
+  #   "comments": [],
+  #   "jira_tickets": ["28518"],
+  #   "jira_issue_number": null,
+  #   "github_related_pr": ["5590"]
+  # }
+  # id, source,title, created, description, comments that shared with jira/github issue should be put in the issue base class. For github PR, initialize with base class, create additional attributes e.g. status, patch content, commit list
+  # one PR the patch file would contain all the modification
+  # jira issue creates additional attributes e.g. component
+  # github commit: patch content, if it is in one pr, we won't treat it as a standalone commit. We would include it in githubPR. So githubPR actually would be treated as parent class of githubcommit. For now, we don't care github commit implement.
+
 @dataclass
 class JiraIssue:
     id: str
