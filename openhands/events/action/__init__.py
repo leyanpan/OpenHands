@@ -14,6 +14,7 @@ from openhands.events.action.files import (
     FileReadAction,
     FileWriteAction,
 )
+from openhands.events.action.issues import IssuesQueryAction
 from openhands.events.action.message import MessageAction
 
 __all__ = [
@@ -33,4 +34,5 @@ __all__ = [
     'IPythonRunCellAction',
     'MessageAction',
     'ActionConfirmationStatus',
+    'IssuesQueryAction',
 ]
