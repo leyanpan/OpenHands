@@ -78,5 +78,8 @@ class ActionTypeSchema(BaseModel):
     SEND_PR: str = Field(default='send_pr')
     """Send a PR to github."""
 
+    ISSUE_QUERY: str = Field(default='issue_quert')
+    """Query issues from jira and github."""
+
 
 ActionType = ActionTypeSchema()

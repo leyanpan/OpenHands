@@ -41,6 +41,7 @@ from openhands.llm.llm import LLM
 from openhands.memory.condenser import Condenser
 from openhands.runtime.plugins import (
     AgentSkillsRequirement,
+    IssuesRequirement,
     JupyterRequirement,
     PluginRequirement,
 )
@@ -73,6 +74,7 @@ class CodeActAgent(Agent):
         # AgentSkillsRequirement provides a lot of Python functions,
         # and it needs to be initialized before Jupyter for Jupyter to use those functions.
         AgentSkillsRequirement(),
+        IssuesRequirement(),
         JupyterRequirement(),
     ]
 
@@ -95,6 +97,7 @@ class CodeActAgent(Agent):
             codeact_enable_browsing=self.config.codeact_enable_browsing,
             codeact_enable_jupyter=self.config.codeact_enable_jupyter,
             codeact_enable_llm_editor=self.config.codeact_enable_llm_editor,
+            codeact_enable_issues=self.config.codeact_enable_issues,
         )
         logger.debug(
             f'TOOLS loaded for CodeActAgent: {json.dumps(self.tools, indent=2, ensure_ascii=False).replace("\\n", "\n")}'

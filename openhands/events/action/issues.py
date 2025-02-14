@@ -9,7 +9,7 @@ from openhands.events.action.action import (
 
 
 @dataclass
-class IssuesQueryAction(Action):
+class IssueQueryAction(Action):
     query: str
     thought: str = ''
     # TODO: add ISSUEQUERY to ActionType

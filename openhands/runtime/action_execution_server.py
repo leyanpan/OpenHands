@@ -39,6 +39,7 @@ from openhands.events.action import (
     FileReadAction,
     FileWriteAction,
     IPythonRunCellAction,
+    IssueQueryAction,
 )
 from openhands.events.event import FileEditSource, FileReadSource
 from openhands.events.observation import (
@@ -414,6 +415,15 @@ class ActionExecutor:
 
     async def browse_interactive(self, action: BrowseInteractiveAction) -> Observation:
         return await browse(action, self.browser)
+
+    async def issue_query(self, action: IssueQueryAction) -> Observation:
+        if 'issues' in self.plugins:
+            plugin: Plugin = self.plugins['issues']
+            return await plugin.run(action)
+        else:
+            raise RuntimeError(
+                'IssuesRequirement not found. Unable to run IssueQueryAction.'
+            )
 
     def close(self):
         if self.bash_session is not None:

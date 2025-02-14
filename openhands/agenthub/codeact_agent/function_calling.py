@@ -464,6 +464,30 @@ FinishTool = ChatCompletionToolParam(
     ),
 )
 
+_QUERY_ISSUE_DESCRIPTION = """
+Given a query and further constraints, retrieve relevant past Jira issues, Github issues, PRs, and commits.
+You should use this tool to view how past issues were resolved to provide guidance on how to resolve the current issue.
+It is highly encouraged to query this tool when getting hands on a new issue.
+"""
+
+IssueQueryTool = ChatCompletionToolParam(
+    type='function',
+    function=ChatCompletionToolParamFunctionChunk(
+        name='issue_query',
+        description=_QUERY_ISSUE_DESCRIPTION,
+        parameters={
+            'type': 'object',
+            'properties': {
+                'query': {
+                    'type': 'string',
+                    'description': 'The query to search for issues.',
+                },
+            },
+            'required': ['query'],
+        },
+    ),
+)
+
 
 def combine_thought(action: Action, thought: str) -> Action:
     if not hasattr(action, 'thought'):
@@ -603,6 +627,7 @@ def get_tools(
     codeact_enable_browsing: bool = False,
     codeact_enable_llm_editor: bool = False,
     codeact_enable_jupyter: bool = False,
+    codeact_enable_issues: bool = False,
 ) -> list[ChatCompletionToolParam]:
     tools = [CmdRunTool, FinishTool]
     if codeact_enable_browsing:
@@ -610,6 +635,8 @@ def get_tools(
         tools.append(BrowserTool)
     if codeact_enable_jupyter:
         tools.append(IPythonTool)
+    if codeact_enable_issues:
+        tools.append(IssueQueryTool)
     if codeact_enable_llm_editor:
         tools.append(LLMBasedFileEditTool)
     else:
